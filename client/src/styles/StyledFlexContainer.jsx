@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import Box from './StyledBox'
 
-const FlexBox = styled(Box).attrs(props => ({
+const FlexContainer = styled(Box).attrs(props => ({
     width: props.width || '100%',
     alignItems: props.alignItems || 'center',
     justifyContent: props.justifyContent || 'center',
@@ -27,4 +27,4 @@ const FlexBox = styled(Box).attrs(props => ({
 }
 `;
 
-export default FlexBox;
+export default FlexContainer;
