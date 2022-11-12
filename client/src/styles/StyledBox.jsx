@@ -6,18 +6,21 @@ const Box = styled.div.attrs(props => {
         height = '100%', 
         borderRadius = 0,
         theme,
-        background,
+        background = 'white',
         border = 0,
         position = 'relative',
+        padding = '0px',
         style
     } = props;
+    const bg = theme.main[background] ? theme.main[background] : background;
     return ({
         width,
         height,
         borderRadius,
-        background: background || theme.main.background,
+        background: bg,
         border,
         position,
+        padding,
         style
     })
 })`
@@ -27,6 +30,7 @@ const Box = styled.div.attrs(props => {
         border-radius: ${props.borderRadius};
         background: ${props.background};
         border: ${props.border};
+        padding: ${props.padding}
         ${props.style ? {...props.style} : ''}
     `}
 `;

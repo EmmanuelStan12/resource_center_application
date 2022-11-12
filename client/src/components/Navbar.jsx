@@ -1,28 +1,25 @@
 import React from 'react'
-import StyledNavbar, { NavbarOption, NavbarOptions, NavbarTitle } from '../styles/StyledNavbar'
+import StyledNavbar, { NavbarOption, NavbarOptions, NavbarTitle } from '../styles/StyledNavbar';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     return (
         <>
         <StyledNavbar>
-            <NavbarTitle>
-                Reusable  <span>Components</span>
+            <NavbarTitle spanColor='#121212'>
+                Intern  <span>Corp</span>
             </NavbarTitle>
             <NavbarOptions>
                 <NavbarOption>
-                    <a href='https://www.google.com'>Home</a>
+                    <NavLink className={(props) => props.isActive ? 'active' : ''} to='login'>
+                        Login
+                    </NavLink>
                     <div></div>
                 </NavbarOption>
                 <NavbarOption>
-                    <a href='https://www.google.com'>Contact</a>
-                    <div></div>
-                </NavbarOption>
-                <NavbarOption>
-                    <a href='https://www.google.com'>Blog</a>
-                    <div></div>
-                </NavbarOption>
-                <NavbarOption>
-                    <a href='https://www.google.com'>About</a>
+                    <NavLink className={(props) => props.isActive ? 'active' : ''} to='register'>
+                        Register
+                    </NavLink>
                     <div></div>
                 </NavbarOption>
             </NavbarOptions>

@@ -9,7 +9,8 @@ const FlexContainer = styled(Box).attrs(props => ({
     height: props.height || 'fit-content',
     gap: props.gap || 0,
     margin: props.margin || 0,
-    padding: props.padding || 0
+    padding: props.padding || 0,
+    flexWrap: props.flexWrap || 'wrap'
 }))`
     ${props => css`
         width: ${props.width};
@@ -22,7 +23,7 @@ const FlexContainer = styled(Box).attrs(props => ({
         margin: ${props.margin};
         padding: ${props.padding};
         gap: ${props.gap};
-        flex-wrap: wrap;
+        flex-wrap: ${props.flexWrap};
     `
 }
 `;

@@ -1,22 +1,27 @@
 import styled, {css} from "styled-components";
 
 const StyledNavbar = styled.nav`
-    padding: 1rem 2rem;
-    box-shadow: inset 1px 3px 5px rgba(0,0,0,0.1);
+    height: 70px;
+    padding: 0rem 2rem;
     display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
     width: 100%;
+    z-index: 100;
+    box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.5);
     ${props => css`
         justify-content: ${props.justifyContent || 'space-between'};
-        border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgb(252, 252, 252);
     `}
 `;
 
 export const NavbarTitle = styled.h3`
     ${props => css`
-        color: ${props.color || 'white'};
+        color: ${props.theme.main.primary || 'white'};
         font-size: 1.25rem;
         span {
             color: ${props.spanColor || props.theme.main.primary}
@@ -35,8 +40,9 @@ export const NavbarOption = styled.li`
     overflow: hidden;
     a {
         text-decoration: none;
-        font-size: 1.07rem;
-        color: white;
+        font-size: 1.2rem;
+        color: ${props => props.theme.main.primary};
+        font-style: bold;
     }
     div {
         height: 2px;
@@ -46,6 +52,9 @@ export const NavbarOption = styled.li`
         transition: all 500ms ease;
     }
     &&:hover div {
+        transform: translateX(0%);
+    }
+    div.active {
         transform: translateX(0%);
     }
 `;

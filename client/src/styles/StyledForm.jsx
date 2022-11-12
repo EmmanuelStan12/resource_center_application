@@ -7,29 +7,32 @@ const StyledForm = styled.form.attrs(props => {
         borderRadius = '10px',
         theme,
         border = 0,
-        background,
+        background = 'white',
+        justifyContent = 'flex-start',
+        alignItems = 'flex-start'
     } = props;
     return ({
         width,
         height,
         borderRadius,
-        background: background || theme.main.background,
+        background: background,
         border,
+        justifyContent,
+        alignItems,
     })
 })`
     ${props => css`
         width: ${props.width};
         height: ${props.height};
-        border-radius: ${props.borderRadius};
         background: ${props.background};
         border: ${props.border};
         display: flex;
-        flex-wrap: wrap;
-        justify-content: start;
-        align-items: flex-start;
+        flex-direction: column;
+        justify-content: ${props.justifyContent};
+        align-items: ${props.alignItems};
         gap: 7px;
         min-width: 300px;
-        box-shadow: 0 0 5px 3px rgba(0,0,0,0.4);
+        
         padding: 0px 15px;
     `}
 `;

@@ -24,6 +24,9 @@ const Text = styled.h1.attrs(props => {
         letter-spacing: ${spacing};
         line-height: ${line};
         color: ${fontColor};
+        a {
+            color: ${theme.main.primary}
+        };
         span {
             color: ${theme.main.primary};
         }
