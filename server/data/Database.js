@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, addDoc, collection, query, where } = require('firebase/firestore')
+const { getFirestore, addDoc, collection, query, where, getDocs } = require('firebase/firestore')
 
 const { config } = require("../config/Configuration");
 
@@ -18,14 +18,19 @@ class Database {
 
     async create(data, col) {
         const docRef = await addDoc(collection(this.db, col), { ...data });
-        console.log("Document written with ID: ", docRef.id);
+        //console.log("Document written with ID: ", docRef.id);
         return { ...data, _id: docRef.id }
     }
 
-    async find(param, col) {
+    async find(row, param, col) {
         const userRef = collection(this.db, col);
-        const q = query(userRef, where(`${param}`, "==", param));
-        return q.converter.fromFirestore();
+        const q = query(userRef, where(row, "==", param));
+        const querySnapshot = await getDocs(q);
+        const data = []
+        querySnapshot.forEach((value) => {
+            data.push(value.data());
+        });
+        return data
     }
 
     async delete(param, col) {

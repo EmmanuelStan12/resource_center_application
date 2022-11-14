@@ -1,19 +1,36 @@
 const { Database } = require("../data/Database");
-const { hashPassword } = require('../util/PasswordValidator')
+const { hashPassword, validatePassword, isPasswordValid } = require('../util/PasswordValidator')
 
 class User {
     static async login(email, password) {
-        const user = await Database.instance().find(email, 'users');
-        console.log(user)
+        const response = await Database.instance().find('email', email, 'users');
+        if (response.length === 0) {
+            throw Error('Email or password is incorrect');
+        }
+        const user = response[0];
+        const isValid = isPasswordValid(password, user.password, user.salt);
+        if (!isValid) {
+            throw Error('Email or password is incorrect')
+        }
+        delete user.password;
+        delete user.salt;
+        return user
     }
 
     static async register(data) {
-        const user = {...this.default(), ...data}
+        const user = {...this.default(), ...data};
+        const doesUserExists = await Database.instance().find('email', user.email, 'users');
+        console.log(doesUserExists)
+        if (doesUserExists.length !== 0) {
+            throw Error("User already exists")
+        }
         const hash = hashPassword(user.password);
         user.password = hash.hash;
         user['salt'] = hash.salt;
-        const u = await Database.instance().create(user, 'users');
-        console.log(u)
+        const response = await Database.instance().create(user, 'users');
+        delete response.password;
+        delete response.salt
+        return response;
     }
 
     static async update(data) {
@@ -31,20 +48,22 @@ class User {
             lastname,
             email,
             password,
-            isValidated,
             isAdmin,
             isMentor,
-            imageUrl
+            imageUrl,
+            track,
+            role
         } = data;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.isValidated = isValidated;
+        this.track = track;
         this.isAdmin = isAdmin;
         this.isMentor = isMentor;
         this.imageUrl = imageUrl;
+        this.role = role;
     }
 
     static default() {
@@ -54,10 +73,11 @@ class User {
             lastname: null,
             email: null,
             password: null,
-            isValidated: false,
             isAdmin: false,
             isMentor: false,
-            imageUrl: null
+            imageUrl: null,
+            track: null,
+            role: null
         }
     }
 }

@@ -7,7 +7,7 @@ module.exports.issueToken = (_id, expiresIn = '1d') => {
         iat: Date.now()
     };
 
-    const token = jwt.sign(payload, process.env.JWT_KEY, {
+    const token = jwt.sign(payload, process.env.JWT_TOKEN, {
         expiresIn,
         algorithm: 'HS256'
     })
@@ -18,7 +18,7 @@ module.exports.issueToken = (_id, expiresIn = '1d') => {
     }
 }
 
-const verifyJWTMiddleware = (request, response, next) => {
+module.exports.verifyJWTMiddleware = (request, response, next) => {
     const tokenParts = request.headers.authorization.split(" ");
     const regex = /$*.$*.$*/;
     if (
@@ -40,7 +40,7 @@ const verifyJWTMiddleware = (request, response, next) => {
     }
 };
 
-const verifyJWT = (request) => {
+module.exports.verifyJWT = (request) => {
     const tokenParts = request.headers.authorization.split(" ");
     const token = tokenParts[1]
     try {
@@ -58,9 +58,4 @@ const verifyJWT = (request) => {
     } catch (error) {
         throw error;
     }
-}
-
-module.exports = {
-    verifyJWT,
-    verifyJWTMiddleware
 }

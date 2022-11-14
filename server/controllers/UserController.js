@@ -1,19 +1,15 @@
 const { User } = require('../models/User');
-const { handleResponse } = require('../util/CustomResponse')
+const { handleResponse } = require('../util/CustomResponse');
+const { issueToken } = require('../util/JSONWebToken');
 
 module.exports.login = async (request, response) => {
     const { email, password } = request.body;
     try {
         const user = await User.login(email, password);
-        // if (user.isValidated) {
-        //     const _id = user._id;
-        //     const token = issueJWT(_id);
-        //     const res = handleResponse(200, { user, token }, null)
-        //     response.status(200).json(res);
-        // } else {
-        //     const res = handleResponse(401, {}, 'User not validated')
-        //     response.status(200).json(res)
-        // }
+        const _id = user._id;
+        const token = issueToken(_id);
+        const res = handleResponse(200, { user, token }, null)
+        response.status(200).json(res);
     } catch (error) {
         const res = handleResponse(404, {}, error.message)
         response.status(404).send(res);
@@ -22,7 +18,15 @@ module.exports.login = async (request, response) => {
 
 module.exports.register = async (request, response) => {
     const { firstname, lastname, password, email, username } = request.body;
-    console.log(request.body)
+    try {
+        const user = await User.register(request.body);
+        const token = issueToken(user._id);
+        const res = handleResponse(201, { token, user }, null);
+        response.status(res.status).send(res);  
+    } catch (error) {
+        const res = handleResponse(404, {}, error.message)
+        response.status(res.status).send(res);
+    }
     // try {
     //     const user = await User.create({ firstName, lastName, username, email, password })
     //     await sendMail(email)

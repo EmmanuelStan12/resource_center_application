@@ -1,2 +1,3 @@
-const { User } = require("./models/User")
-    User.register({firstname: 'Emmanuel'})
+const crypto = require('crypto')
+
+console.log(crypto.randomBytes(32).toString('hex'));
