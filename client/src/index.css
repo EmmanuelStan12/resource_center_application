@@ -36,8 +36,24 @@ a.active ~ div {
   justify-content: center;
   align-items: center;
   display: flex;
+  gap: 10px;
+  transition: all 400ms ease;
 }
 
-.floating_button {
-  justify-self: flex-end;
+.error_box.hide {
+  transform: translateY(-100px);
+  z-index: -99;
+}
+
+.error_box.show {
+  transform: translateY(0);
+  z-index: 99;
+}
+
+.end_icon {
+  cursor: pointer;
+}
+
+.end_icon:hover {
+  color: rgb(31, 31, 31);
 }

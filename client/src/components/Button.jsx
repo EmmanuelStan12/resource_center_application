@@ -3,21 +3,33 @@ import BaseButton, { ElevatedButton, FloatingActionButton, IconButton, OutlinedB
 import FlexBox from '../styles/StyledFlexContainer'
 
 const types = {
-    'outlined': OutlinedButton,
-    'elevated': ElevatedButton,
-    'default': BaseButton,
-    'floating': FloatingActionButton,
-    'icon': IconButton
+  'outlined': OutlinedButton,
+  'elevated': ElevatedButton,
+  'default': BaseButton,
+  'floating': FloatingActionButton,
+  'icon': IconButton
 }
 
-const Button = ({ variant, icon, ...otherProps }) => {
+const Button = ({ variant, disabled = false, icon, ...otherProps }) => {
 
-    const Component = types[`${variant}`]
-    const Icon = icon;
+  const Component = types[`${variant}`]
+  const Icon = icon;
   return (
     <FlexBox margin='0' width='inline-block' height='fit-content' background='transparent' padding='9px 10px' gap={icon ? '5px' : '0px'}>
-        {icon && <Icon />}
-        <Component {...otherProps} ></Component>
+      {icon && <Icon />}
+      <Component disabled={disabled} {...otherProps} ></Component>
+    </FlexBox>
+  )
+}
+
+export const LoadingButton = ({ variant, disabled = false, icon, ...otherProps }) => {
+
+  const Component = types[`${variant}`]
+  const Icon = icon;
+  return (
+    <FlexBox margin='0' width='inline-block' height='fit-content' background='transparent' padding='9px 10px' gap={icon ? '5px' : '0px'}>
+      {disabled && <Icon />}
+      <Component disabled={disabled} {...otherProps} ></Component>
     </FlexBox>
   )
 }

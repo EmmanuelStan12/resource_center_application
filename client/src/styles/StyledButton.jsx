@@ -14,7 +14,7 @@ const BaseButton = styled.button`
         font-weight: 600;
         text-transform: uppercase;
         transition: all 300ms ease-in-out; 
-        justifySelf: flex-end;       
+        justifySelf: flex-end; 
         `
     }
 `;
@@ -23,13 +23,16 @@ export const ElevatedButton = styled(BaseButton)`
     ${props => {
         const {
             theme,
-            variant = 'primary'
+            variant = 'primary',
+            disabled
         } = props;
         const bg = theme.main[`${variant}`] || 'transparent';
         return css`
             box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
             background-color: ${bg};
             color: white;
+            transition: all 200ms ease;
+            box-shadow: ${disabled ? 'inset 0 0 100px 100px rgba(255, 255, 255, 0.4)' : '0 0 0 0 transparent'};
             &:hover {
                 box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
             }
@@ -47,7 +50,7 @@ export const FloatingActionButton = styled(ElevatedButton).attrs(props => {
         color: theme.main[`${color}`] || color
     }
 })`
-    ${({ variant, size, fontSize, color }) => css`
+    ${({ variant, size, fontSize, color, disabled }) => css`
         border-radius: 50%;
         width: ${size};
         height: ${size};
@@ -56,6 +59,8 @@ export const FloatingActionButton = styled(ElevatedButton).attrs(props => {
         justify-content: center;
         align-items: center;
         background: ${variant};
+        transition: all 200ms ease;
+        box-shadow: ${disabled ? 'inset 0 0 100px 100px rgba(255, 255, 255, 0.4)' : '0 0 0 0 transparent'};
         svg {
             color: ${color};
             font-size: ${fontSize};
@@ -72,6 +77,8 @@ export const IconButton = styled(ElevatedButton)`
         border-radius: 30px;
         align-items: center;
         text-align: center;
+        transition: all 200ms ease;
+        box-shadow: ${props.disabled ? 'inset 0 0 100px 100px rgba(255, 255, 255, 0.4)' : '0 0 0 0 transparent'};
         svg {
             color: white;
             font-size: 1.9rem;
@@ -87,7 +94,8 @@ export const OutlinedButton = styled(BaseButton)`
     ${props => {
         const {
             theme,
-            variant = 'primary'
+            variant = 'primary',
+            disabled
         } = props;
         const bg = theme.main[`${variant}`] || 'transparent';
         const onBg = theme.main[`on${variant.charAt(0).toUpperCase() + variant.slice(1)}`] || 'white';
@@ -95,6 +103,8 @@ export const OutlinedButton = styled(BaseButton)`
             border: 2px solid ${bg};
             background-color: transparent;
             color: ${bg};
+            transition: all 200ms ease;
+            box-shadow: ${disabled ? 'inset 0 0 100px 100px rgba(255, 255, 255, 0.4)' : '0 0 0 0 transparent'};
             &:hover {
                 box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
                 color: ${onBg};
@@ -108,12 +118,14 @@ export const DefaultButton = styled(BaseButton)`
     ${props => {
         const {
             theme,
-            variant = 'primary'
+            variant = 'primary',
+            disabled
         } = props;
         const bg = theme.main[`${variant}`] || 'transparent';
         return css`
             background-color: ${bg};
             color: white;
+            box-shadow: ${disabled ? 'inset 0 0 100px 100px rgba(255, 255, 255, 0.4)' : '0 0 0 0 transparent'};
             &:hover {
                 box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
             }

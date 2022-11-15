@@ -4,6 +4,7 @@ const { issueToken } = require('../util/JSONWebToken');
 
 module.exports.login = async (request, response) => {
     const { email, password } = request.body;
+    console.log(request.body)
     try {
         const user = await User.login(email, password);
         const _id = user._id;
@@ -12,12 +13,13 @@ module.exports.login = async (request, response) => {
         response.status(200).json(res);
     } catch (error) {
         const res = handleResponse(404, {}, error.message)
-        response.status(404).send(res);
+        response.status(401).send(res);
     }
 }
 
 module.exports.register = async (request, response) => {
-    const { firstname, lastname, password, email, username } = request.body;
+    const { firstname, lastname, password, email, username, track } = request.body;
+    console.log(request.body)
     try {
         const user = await User.register(request.body);
         const token = issueToken(user._id);

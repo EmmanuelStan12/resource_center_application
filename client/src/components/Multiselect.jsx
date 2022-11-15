@@ -1,12 +1,12 @@
 import React from 'react'
 import StyledMultiselect from '../styles/StyledMultiselect'
 
-const Multiselect = ({ options }) => {
+const Multiselect = ({ options, reference }) => {
   return (
     <StyledMultiselect>
-        <select >
+        <select ref={reference}>
             {options.map(({ value, name }) => 
-                <option value={value}>{name}</option>
+                <option key={value} value={value}>{name}</option>
                 )}
         </select>
     </StyledMultiselect>

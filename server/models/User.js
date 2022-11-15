@@ -1,8 +1,14 @@
 const { Database } = require("../data/Database");
+const { validateEmail } = require("../util/EmailValidator");
 const { hashPassword, validatePassword, isPasswordValid } = require('../util/PasswordValidator')
 
 class User {
     static async login(email, password) {
+        const isEmail = validateEmail(email)
+        if (!isEmail) {
+            throw Error('Email not valid, please put in a valid email')
+        }
+
         const response = await Database.instance().find('email', email, 'users');
         if (response.length === 0) {
             throw Error('Email or password is incorrect');
@@ -19,10 +25,23 @@ class User {
 
     static async register(data) {
         const user = {...this.default(), ...data};
-        const doesUserExists = await Database.instance().find('email', user.email, 'users');
-        console.log(doesUserExists)
-        if (doesUserExists.length !== 0) {
-            throw Error("User already exists")
+        const isEmail = validateEmail(user.email)
+        if (!isEmail) {
+            throw Error('Email not valid, please put in a valid email')
+        }
+        if (user.password) {
+            const isPasswordValid = validatePassword(user.password);
+            if (!isPasswordValid) {
+                throw Error('Password must be 8 characters long, with uppercase letters, numbers and special characters')
+            }
+        }
+        const doesEmailExists = await Database.instance().find('email', user.email, 'users');
+        if (doesEmailExists.length !== 0) {
+            throw Error("Email already exists")
+        }
+        const doesUsernameExists = await Database.instance().find('username', user.username, 'users');
+        if (doesUsernameExists.length !== 0) {
+            throw Error("Username already exists")
         }
         const hash = hashPassword(user.password);
         user.password = hash.hash;

@@ -13,7 +13,7 @@ export const userReducer = (state = initialState, action) => {
         case USER_ERROR:
             return { ...state, loading: false, error: action.payload }
         case USER_LOADING:
-            return { ...state, loading: true }
+            return { ...state, loading: true, error: null }
         default:
             return state;
     }

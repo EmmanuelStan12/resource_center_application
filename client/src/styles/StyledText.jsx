@@ -11,7 +11,6 @@ const Text = styled.h1.attrs(props => {
     } = props;
     const fontSize = size || theme.textVariants[`${variant}`];
     const c = theme.main[`${color}`] || color;
-    console.log(fontSize)
     return {
         size: fontSize,
         spacing: letterSpacing,

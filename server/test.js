@@ -1,3 +1,4 @@
-const crypto = require('crypto')
+const crypto = require('crypto');
+const { validatePassword } = require('./util/PasswordValidator');
 
-console.log(crypto.randomBytes(32).toString('hex'));
+console.log(validatePassword('Ndunuju@'));
