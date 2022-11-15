@@ -41,7 +41,7 @@ export const FloatingActionButton = styled(ElevatedButton).attrs(props => {
     const { variant = 'primary', theme, size = 50, color } = props;
 
     return {
-        variant: theme.main[`${variant}`] || 'white',
+        variant: theme.main[`${variant}`] || variant,
         size: `${size}px`,
         fontSize: `${size * 0.5}px`,
         color: theme.main[`${color}`] || color

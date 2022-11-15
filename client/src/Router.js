@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Box from "./styles/StyledBox";
 import Navbar from './components/Navbar'
+import ErrorDisplay from "./components/ErrorDisplay";
 
 const router = createBrowserRouter(
   [
@@ -26,6 +27,7 @@ const Router = () => {
   return (
     <Box height='100vh' padding='70px 0px 0px'>
       <Navbar />
+      <ErrorDisplay />
       <Routes>
       <Route element={<Home />} path='/' />
       <Route element={<Register />} path='/register' />
