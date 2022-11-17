@@ -1,5 +1,5 @@
 const { initializeApp } = require('firebase/app');
-const { getFirestore, addDoc, collection, query, where, getDocs } = require('firebase/firestore')
+const { getFirestore, addDoc, collection, query, where, getDocs, doc, getDoc, deleteDoc, setDoc } = require('firebase/firestore')
 
 const { config } = require("../config/Configuration");
 
@@ -22,23 +22,58 @@ class Database {
         return { ...data, _id: docRef.id }
     }
 
-    async find(row, param, col) {
-        const userRef = collection(this.db, col);
-        const q = query(userRef, where(row, "==", param));
+    async find(field, value, col) {
+        const collectionRef = collection(this.db, col);
+        const q = query(collectionRef, where(field, "==", value));
         const querySnapshot = await getDocs(q);
         const data = []
-        querySnapshot.forEach((value) => {
-            data.push(value.data());
+        querySnapshot.forEach((item) => {
+            data.push(item.data());
         });
         return data
     }
 
-    async delete(param, col) {
-
+    async arrayFind(field, value, col) {
+        
     }
 
-    async update(_id, col, data) {
+    async getDocuments(col) {
+        const collectionRef = collection(this.db, col);
+        const q = query(collectionRef)
+        const querySnapshot = await getDocs(q);
+        const data = []
+        querySnapshot.forEach((item) => {
+            data.push(item.data());
+        });
+        return data
+    }
 
+    async deleteDocument(_id, col) {
+        const docRef = doc(this.db, col, _id);
+        const result = await getDoc(docRef);
+        if (result.exists()) {
+            await deleteDoc(docRef)
+            return result.data()
+        }
+        throw Error('Document does not exists');
+    }
+
+    async updateDoc(docId, col, data) {
+        const docRef = doc(this.db, col, docId);
+        const result = await getDoc(docRef);
+        if (result.exists()) {
+            setDoc(docRef, { ...data }, { merge: true })
+        }
+        throw Error('Document does not exists');
+    }
+
+    async getDoc(_id, col) {
+        const docRef = doc(this.db, col, _id);
+        const result = await getDoc(docRef);
+        if (result.exists()) {
+            return result.data()
+        }
+        throw Error('Document does not exists');
     }
 }
 

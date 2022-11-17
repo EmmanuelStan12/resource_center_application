@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 const cors = require('cors');
 const { userRouter } = require('./routes/UserRouter');
+const { notificationRouter } = require('./routes/NotificationRouter');
+const { handleResponse } = require('./util/CustomResponse');
 require('dotenv').config();
 
 // Routes
@@ -18,15 +20,17 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes for specific endpoint
 app.use('/users', userRouter);
+app.use('/notifications', notificationRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  next(handleResponse(404, {}, 'Not Found'));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500).send({ error: err });
+  console.log(err)
+  res.status(err.status || 500).send(handleResponse(err.status || 500, err.payload, err.error || 'Internal server error'));
 });
 
 const PORT = process.env.PORT || 3002

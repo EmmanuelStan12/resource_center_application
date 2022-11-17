@@ -40,7 +40,7 @@ export const NavbarOption = styled.li`
     overflow: hidden;
     a {
         text-decoration: none;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: ${props => props.theme.main.primary};
         font-style: bold;
     }

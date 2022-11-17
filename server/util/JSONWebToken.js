@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { handleResponse } = require('./CustomResponse');
 
+
 module.exports.issueToken = (_id, expiresIn = '1d') => {
     const payload = {
         sub: _id,
@@ -19,23 +20,31 @@ module.exports.issueToken = (_id, expiresIn = '1d') => {
 }
 
 module.exports.verifyJWTMiddleware = (request, response, next) => {
+    if (!request.headers.authorization) {
+        next(handleResponse(401, {}, "Invalid Token"))
+        return;
+    }
     const tokenParts = request.headers.authorization.split(" ");
-    const regex = /$*.$*.$*/;
+    
     if (
         tokenParts[0] === "Bearer" &&
-        regex.test(tokenParts[1])
+        tokenParts[1]
     ) {
         try {
-            const token = jsonwebtoken.verify(token, process.env.JWT_KEY, {
+            const payload = jwt.verify(tokenParts[1], process.env.JWT_TOKEN, {
                 algorithms: ["HS256"],
             });
-            request.token = token;
-            next();
+            if (payload) {
+                request.payload = payload;
+                next();
+                return;
+            }
+            next(handleResponse(401, {}, "Invalid Token"))
         } catch (error) {
-            next(error);
+            next(handleResponse(401, {}, error.message || 'Unknown error occured'))
         }
     } else {
-        const res = handleResponse(402, null, 'Unauthorized')
+        const res = handleResponse(402, {}, 'Unauthorized')
         next(res);
     }
 };
@@ -45,7 +54,7 @@ module.exports.verifyJWT = (request) => {
     const token = tokenParts[1]
     try {
         if (tokenParts[0] === "Bearer") {
-            const payload = jsonwebtoken.verify(token, process.env.JWT_KEY, {
+            const payload = jwt.verify(token, process.env.JWT_TOKEN, {
                 algorithms: ["HS256"],
             });
             if (payload) {
