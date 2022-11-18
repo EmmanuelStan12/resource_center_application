@@ -8,6 +8,11 @@ import ErrorDisplay from "./components/ErrorDisplay";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 import useLocalStorage from "./hooks/useLocalStorage";
+import ErrorPage from "./pages/ErrorPage";
+import Inbox from "./pages/Inbox";
+import HomeContainer from "./containers/HomeContainer";
+import AuthContainer from "./containers/AuthContainer";
+import Notification from './pages/Notifications';
 
 const router = createBrowserRouter(
   [
@@ -33,22 +38,18 @@ const Router = () => {
   const [getItem, setItem] = useLocalStorage()
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location)
 
   useEffect(() => {
     const token = getItem('token')
     if (token) {
       const userInfo = JSON.parse(token)
-      navigate('/', { replace: true })
+      navigate('/dashboard', { replace: true })
     }
   }, [userState])
 
   useEffect(() => {
     const token = getItem('token')
-    if (token) {
-      const userInfo = JSON.parse(token)
-      navigate('/', { replace: true })
-    } else {
+    if (!token) {
       if (location.pathname !== '/login' && location.pathname !== '/register') {
         navigate('/login', { replace: true })
       }
@@ -56,13 +57,19 @@ const Router = () => {
   }, [location.pathname])
 
   return (
-    <Box height='100vh' padding='70px 0px 0px'>
-      <Navbar />
+    <Box height='100vh'>
       <ErrorDisplay show={show} setShow={setShow} error={userState.error} />
       <Routes>
-      <Route element={<Home />} path='/' />
-      <Route element={<Register />} path='/register' />
-      <Route element={<Login />} path='/login' /> 
+        <Route element={<HomeContainer />} path='dashboard'>
+          <Route element={<Notification />} path='notifications' />
+          <Route element={<Inbox />} path='inbox' />
+          <Route element={<Home />} index path='/dashboard' />
+        </Route>
+        <Route element={<AuthContainer />} path='/'>
+          <Route element={<Register />} path='register' />
+          <Route element={<Login />} path='login' /> 
+        </Route>
+        <Route element={<ErrorPage />} path="*" />
       </Routes>
     </Box>
   )

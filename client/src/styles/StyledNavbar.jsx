@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledNavbar = styled.nav`
     height: 70px;
@@ -58,5 +58,16 @@ export const NavbarOption = styled.li`
         transform: translateX(0%);
     }
 `;
+
+export const StyledHomeNavbar = styled.div`
+    padding: 0.5rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
+`
 
 export default StyledNavbar;

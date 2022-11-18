@@ -57,3 +57,7 @@ a.active ~ div {
 .end_icon:hover {
   color: rgb(31, 31, 31);
 }
+
+.active_d {
+  color: blue;
+}
