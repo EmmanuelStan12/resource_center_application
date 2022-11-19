@@ -13,6 +13,7 @@ import Inbox from "./pages/Inbox";
 import HomeContainer from "./containers/HomeContainer";
 import AuthContainer from "./containers/AuthContainer";
 import Notification from './pages/Notifications';
+import Curriculum from "./pages/Curriculum";
 
 const router = createBrowserRouter(
   [
@@ -63,6 +64,7 @@ const Router = () => {
         <Route element={<HomeContainer />} path='dashboard'>
           <Route element={<Notification />} path='notifications' />
           <Route element={<Inbox />} path='inbox' />
+          <Route element={<Curriculum />} path='curriculum' />
           <Route element={<Home />} index path='/dashboard' />
         </Route>
         <Route element={<AuthContainer />} path='/'>

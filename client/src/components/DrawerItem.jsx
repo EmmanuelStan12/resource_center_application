@@ -4,12 +4,13 @@ import { FloatingActionButton } from '../styles/StyledButton';
 import { Divider, StyledDrawerItem } from '../styles/StyledDrawerNavigation';
 import Text from '../styles/StyledText'
 
-const DrawerItem = ({ item, active = false }) => {
+const DrawerItem = ({ onClick, item, active = false }) => {
     const { icon, title, route } = item;
     const Icon = icon;
     return (
         <>
         <NavLink 
+        onClick={() => onClick(false)}
         to={route}
         style={{ textDecoration: 'none' }}>
             <StyledDrawerItem alignItems='center' width='100%' height='fit-content' gap='7px'>

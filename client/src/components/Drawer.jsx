@@ -64,15 +64,14 @@ const Drawer = ({ open, isOpen }) => {
     
     return (
         <>
-        <DrawerOverlay className={isOpen && 'active'} />
+        <DrawerOverlay className={isOpen && 'active'} onClick={() => open(false)} />
         <StyledDrawer className={isOpen && 'active'}>
-            
             <DrawerTitle open={open} />
             <Divider></Divider>
             {drawerItems.map((item) => {
                 const isActive = path === item.route
                 return (
-                <DrawerItem key={item.title} item={item} active={isActive} />
+                <DrawerItem onClick={open} key={item.title} item={item} active={isActive} />
             )})}
         </StyledDrawer>
         </>

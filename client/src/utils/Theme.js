@@ -17,7 +17,7 @@ const textVariants = {
     h6: '1.5rem',
     body1: '1.2rem',
     body2: '1.12rem',
-    caption: '1rem'
+    caption: '0.8rem'
 }
 
 const sizes = {

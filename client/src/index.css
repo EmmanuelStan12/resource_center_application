@@ -10,7 +10,8 @@
 }
 
 .test {
-  color: rgb(248, 248, 248);
+  overflow-y: scroll;
+  color: rgb(85, 85, 85);
 }
 
 body {

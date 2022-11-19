@@ -10,8 +10,8 @@ const HomeContainer = () => {
   const [isOpen, open] = useState(false)
 
   return (
-    <Box>
-      <StyledDrawerNavigation>
+    <Box height='100vh' className='scrollbar'>
+      <StyledDrawerNavigation height='100%'>
         <HomeNavbar open={open} />
         <Drawer isOpen={isOpen} open={open} />
         <Outlet />
