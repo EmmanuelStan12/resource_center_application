@@ -31,8 +31,9 @@ module.exports.deleteUserNotification = async (request, response) => {
 
 module.exports.getNotifications = async (request, response) => {
     try {
-        const { user_id, track } = request.query;
-        const notifications = await Notification.getNotificationsByUserID(user_id)
+        const { track } = request.query;
+        console.log(request.query, request.payload)
+        const notifications = await Notification.getNotificationsByUserID(request.payload.sub)
         response.status(200).send(handleResponse(200, notifications, null))
     } catch (error) {
         response.status(401).send(handleResponse(401, null, error.message))

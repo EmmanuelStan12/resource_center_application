@@ -5,7 +5,7 @@ import Box from '../styles/StyledBox'
 
 const AuthContainer = () => {
   return (
-    <Box padding='70px 0px 0px'>
+    <Box padding='2.3rem 0 0 0'>
       <Navbar />
       <Outlet />
     </Box>

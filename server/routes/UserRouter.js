@@ -1,5 +1,6 @@
 const express = require('express')
-const { login, register } = require('../controllers/UserController')
+const { login, register, validate, getUsers } = require('../controllers/UserController');
+const { verifyJWTMiddleware } = require('../util/JSONWebToken');
 
 const router = express.Router();
 
@@ -9,6 +10,10 @@ router.get('/', (req, res) => {
 
 router.post('/login', login);
 
-router.post('/register', register)
+router.post('/register', register);
+
+router.get('/validate', verifyJWTMiddleware, validate);
+
+router.get('/get', getUsers)
 
 module.exports.userRouter = router;

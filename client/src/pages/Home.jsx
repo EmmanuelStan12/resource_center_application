@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Box from '../styles/StyledBox'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <Box margin='10px 0 0 0'>
+      
+    </Box>
   )
 }
 

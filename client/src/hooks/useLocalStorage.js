@@ -9,7 +9,11 @@ const useLocalStorage = () => {
         localStorage.setItem(key, value)
     }
 
-    return [get, set];
+    const clear = () => {
+        localStorage.clear()
+    }
+
+    return {get, set, clear};
 }
 
 export default useLocalStorage;

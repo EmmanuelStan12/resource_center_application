@@ -1,51 +1,51 @@
 import axios from 'axios'
 
-export const USER_LOADING = "USER_LOADING";
-export const USER_ERROR = "USER_ERROR";
-export const USER_SUCCESS = "USER_SUCCESS";
+export const USERS_LOADING = "USERS_LOADING";
+export const USERS_ERROR = "USERS_ERROR";
+export const USERS_SUCCESS = "USERS_SUCCESS";
 
 const URL = 'http://127.0.0.1:3002/users'
 
-export const loginUserError = (error) => {
+export const getUsersError = (error) => {
     return {
-        type: USER_ERROR,
+        type: USERS_ERROR,
         payload: error
     }
 }
 
-export const loginUserSuccess = (payload) => {
+export const getUsersSuccess = (payload) => {
     return {
-        type: USER_SUCCESS,
+        type: USERS_SUCCESS,
         payload
     }
 }
 
-export const loginUserLoading = () => {
+export const getUsersLoading = () => {
     return {
-        type: USER_LOADING
+        type: USERS_LOADING
     }
 }
 
-export const loginUser = (email, password) => {
+export const getUsers = (query, token) => {
     return async (dispatch) => {
-        dispatch(loginUserLoading())
+        dispatch(getUsersLoading())
         try {
-            const response = await axios.post(`${URL}/login`, { email: email, password: password });
+            const response = await axios.get(`${URL}/get?${query}`, { 
+                headers: { 'Authorization': token } 
+            });
             const data = response.data
             console.log(data)
             if (response.status !== 200) {
-                dispatch(loginUserError(data.error));
+                dispatch(getUsersError(data.error));
             } else {
-                localStorage.setItem('user', JSON.stringify(data.payload.user))
-                localStorage.setItem('token', JSON.stringify(data.payload.token));
-                dispatch(loginUserSuccess(data.payload));
+                dispatch(getUsersSuccess(data.payload));
             }
         } catch (error) {
             console.log(error)
             if (error.response.data) {
-                dispatch(loginUserError(error.response.data.error))
+                dispatch(getUsersError(error.response.data.error))
             } else {
-                dispatch(loginUserError(error.message || error))
+                dispatch(getUsersError(error.message || error))
             }
         }
     }

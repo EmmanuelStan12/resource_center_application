@@ -26,11 +26,23 @@ class Database {
         const collectionRef = collection(this.db, col);
         const q = query(collectionRef, where(field, "==", value));
         const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            throw Error('Unknown Error occured, please try again')
+        }
         const data = []
         querySnapshot.forEach((item) => {
-            data.push(item.data());
+            data.push({ ...item.data(), id: item.id });
         });
         return data
+    }
+
+    async findByID(id, col) {
+        const docRef = doc(this.db, col, id);
+        const result = await getDoc(docRef);
+        if (result.exists()) {
+            return result.data()
+        }
+        throw Error("Data doesn't exist")
     }
 
     async arrayFind(field, value, col) {

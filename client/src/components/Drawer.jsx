@@ -10,6 +10,7 @@ import {AiOutlineMail } from 'react-icons/ai'
 import { BiCodeAlt } from 'react-icons/bi'
 import DrawerItem from './DrawerItem';
 import { useLocation } from 'react-router-dom';
+import {FiUsers} from 'react-icons/fi'
 
 const DrawerTitle = ({ open }) => {
     return (
@@ -54,6 +55,11 @@ const drawerItems = [
         icon: BiCodeAlt,
         title: "Challenge",
         route: "/dashboard/challenge"
+    },
+    {
+        icon: FiUsers,
+        title: "Users",
+        route: '/dashboard/users'
     }
 ]
 

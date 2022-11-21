@@ -5,8 +5,8 @@ import Register from "./pages/Register";
 import Box from "./styles/StyledBox";
 import Navbar from './components/Navbar'
 import ErrorDisplay from "./components/ErrorDisplay";
-import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import useLocalStorage from "./hooks/useLocalStorage";
 import ErrorPage from "./pages/ErrorPage";
 import Inbox from "./pages/Inbox";
@@ -14,6 +14,9 @@ import HomeContainer from "./containers/HomeContainer";
 import AuthContainer from "./containers/AuthContainer";
 import Notification from './pages/Notifications';
 import Curriculum from "./pages/Curriculum";
+import { checkToken } from "./logic/actions/UserActions";
+import LoadingPage from "./components/LoadingPage";
+import Users from "./pages/Users";
 
 const router = createBrowserRouter(
   [
@@ -36,36 +39,44 @@ const Router = () => {
   const [show, setShow] = useState(false);
 
   const userState = useSelector(state => state.userReducer)
-  const [getItem, setItem] = useLocalStorage()
+  const { get, set, clear } = useLocalStorage()
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = getItem('token')
-    if (token) {
-      const userInfo = JSON.parse(token)
+    const data = userState.data;
+    if (data && data.user) {
       navigate('/dashboard', { replace: true })
+    } else {
+      navigate('/login', { replace: true })
     }
-  }, [userState])
+  }, [userState]);
 
   useEffect(() => {
-    const token = getItem('token')
-    if (!token) {
-      if (location.pathname !== '/login' && location.pathname !== '/register') {
-        navigate('/login', { replace: true })
-      }
-    }
-  }, [location.pathname])
+    dispatch(checkToken())
+  }, [])
+
+  // useEffect(() => {
+  //   const token = get('token')
+  //   if (!token) {
+  //     if (location.pathname !== '/login' && location.pathname !== '/register') {
+  //       navigate('/login', { replace: true })
+  //     }
+  //   }
+  // }, [location.pathname])
 
   return (
     <Box height='100vh'>
+      {userState.loading && <LoadingPage />}
       <ErrorDisplay show={show} setShow={setShow} error={userState.error} />
       <Routes>
         <Route element={<HomeContainer />} path='dashboard'>
           <Route element={<Notification />} path='notifications' />
           <Route element={<Inbox />} path='inbox' />
           <Route element={<Curriculum />} path='curriculum' />
-          <Route element={<Home />} index path='/dashboard' />
+          <Route element={<Users />} path='users' />
+          <Route element={<Home />} path='/dashboard' />
         </Route>
         <Route element={<AuthContainer />} path='/'>
           <Route element={<Register />} path='register' />

@@ -8,6 +8,8 @@ import FlexContainer from '../styles/StyledFlexContainer';
 import { Avatar } from '../styles/StyledImage';
 import { IoMdNotificationsOutline } from 'react-icons/io' 
 import { AiOutlineLogout } from 'react-icons/ai';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 const AuthOptions = () => {
     return (
@@ -75,6 +77,8 @@ const Navbar = () => {
 }
 
 export const HomeNavbar = ({ open }) => {
+    const { clear } = useLocalStorage()
+    const navigate = useNavigate()
     return (
         <StyledHomeNavbar>
             <FlexContainer height='fit-content' width='fit-content' gap='7px'>
@@ -90,7 +94,10 @@ export const HomeNavbar = ({ open }) => {
                     <IoMdNotificationsOutline />
                 </FloatingActionButton>
                 <Avatar size={42} src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png' />
-                <FloatingActionButton size={40} variant='red'>
+                <FloatingActionButton onClick={() => {
+                    clear()
+                    navigate('/login')
+                }} size={40} variant='red'>
                     <AiOutlineLogout />
                 </FloatingActionButton>
             </FlexContainer>

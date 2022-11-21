@@ -31,20 +31,21 @@ module.exports.verifyJWTMiddleware = (request, response, next) => {
         tokenParts[1]
     ) {
         try {
-            const payload = jwt.verify(tokenParts[1], process.env.JWT_TOKEN, {
-                algorithms: ["HS256"],
+            const payload = jwt.verify(tokenParts[1], process.env.JWT_TOKEN, (err, decoded) => {
+                console.log(decoded)
+                if (decoded && !err) {
+                    request.payload = decoded;
+                    next();
+                } else {
+                    next(handleResponse(422, {}, "Invalid or Expired Token"))
+                }
             });
-            if (payload) {
-                request.payload = payload;
-                next();
-                return;
-            }
-            next(handleResponse(401, {}, "Invalid Token"))
+           
         } catch (error) {
             next(handleResponse(401, {}, error.message || 'Unknown error occured'))
         }
     } else {
-        const res = handleResponse(402, {}, 'Unauthorized')
+        const res = handleResponse(401, {}, 'Unauthorized')
         next(res);
     }
 };

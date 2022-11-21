@@ -6,7 +6,7 @@ const initialState = {
     error: null
 }
 
-export const userReducer = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action) => {
     switch(action.type) {
         case USER_SUCCESS:
             return { ...state, loading: false, error: null, data: action.payload }

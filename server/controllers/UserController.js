@@ -7,7 +7,8 @@ module.exports.login = async (request, response) => {
     console.log(request.body)
     try {
         const user = await User.login(email, password);
-        const _id = user._id;
+        console.log(user)
+        const _id = user.id;
         const token = issueToken(_id);
         const res = handleResponse(200, { user, token }, null)
         response.status(200).json(res);
@@ -46,4 +47,38 @@ module.exports.update = async (request, response) => {
 
 module.exports.delete = async (request, response) => {
     
+}
+
+module.exports.validate = async (request, response) => {
+    try {
+        const user = await User.findUser(request.payload.sub);
+        user.id = request.payload.sub
+        console.log(user)
+        if (!user) {
+            response.send(handleResponse(422, {}, 'User does not exist'))
+        }
+        const res = handleResponse(200, { user }, null)
+        response.status(200).json(res);
+    } catch (error) {
+        const res = handleResponse(404, {}, error.message)
+        response.status(401).send(res);
+    }
+}
+
+module.exports.getUsers = async (request, response) => {
+    const { track } = request.query;
+    try {
+        if (!track) {
+            response.status(401).send(handleResponse(401, null, 'Invalid input'))
+        }
+        if (track === 'all') {
+            const users = await User.getAllUsers()
+            response.status(200).send(handleResponse(200, users))
+        } else {
+            const users = await User.findUsers(track);
+            response.status(200).send(handleResponse(200, users))
+        }
+    } catch (error) {
+        response.status(401).send(handleResponse(401, null, error.message || error))
+    }
 }

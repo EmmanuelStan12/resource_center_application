@@ -11,7 +11,7 @@ class User {
 
         const response = await Database.instance().find('email', email, 'users');
         if (response.length === 0) {
-            throw Error('Email or password is incorrect');
+            throw Error('User does not exist');
         }
         const user = response[0];
         const isValid = isPasswordValid(password, user.password, user.salt);
@@ -21,6 +21,33 @@ class User {
         delete user.password;
         delete user.salt;
         return user
+    }
+
+    static async findUser(id) {
+        const user = await Database.instance().findByID(id, 'users');
+        delete user.password;
+        delete user.salt;
+        return user
+    }
+
+    static async findUsers(track) {
+        const users = await Database.instance().find('track', track, 'users');
+        users.map((user) => {
+            delete user.password;
+            delete user.salt;
+        });
+
+        return users;
+    }
+
+    static async getAllUsers() {
+        const users = await Database.instance().getDocuments('users');
+        users.map((user) => {
+            delete user.password;
+            delete user.salt;
+        })
+
+        return users;
     }
 
     static async register(data) {
@@ -62,6 +89,7 @@ class User {
 
     constructor(data) {
         const {
+            id,
             username,
             firstname,
             lastname,
@@ -96,7 +124,8 @@ class User {
             isMentor: false,
             imageUrl: null,
             track: null,
-            role: null
+            role: null,
+            id: null
         }
     }
 }

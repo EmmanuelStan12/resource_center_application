@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 
 const StyledNavbar = styled.nav`
-    height: 70px;
-    padding: 0rem 2rem;
+    padding: 0.5rem 2rem;
     display: flex;
     position: absolute;
     top: 0;

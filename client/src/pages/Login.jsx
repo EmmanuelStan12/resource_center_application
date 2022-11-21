@@ -41,7 +41,7 @@ const Login = () => {
     }
 
   return (
-    <FlexContainer height='100%' background='primary'>
+    <FlexContainer  background='primary'>
         <Box height='100%' background='rgb(252, 252, 252)' style={{ maxWidth: '900px' }}>
             <Form onSubmit={handleSubmit}>
                 <SectionHeader color='#121212'>Login</SectionHeader>
@@ -61,7 +61,7 @@ const Login = () => {
                     </Label>
                     <FlexContainer height='fit-content' width='80%' alignItems='center' justifyContent='space-between'>
                         <Text variant='caption' color='#121212' as='p'>Don't have an account? <Link to='/register'>Register</Link></Text>
-                        <Switch reference={switchRef} label='Remember me' />
+                        <Switch reference={switchRef} variant='caption' label='Remember me' />
                     </FlexContainer>
                     <LoadingButton
                     disabled={userState.loading}

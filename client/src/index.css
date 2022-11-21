@@ -11,7 +11,7 @@
 
 .test {
   overflow-y: scroll;
-  color: rgb(85, 85, 85);
+  color: rgb(241, 241, 241);
 }
 
 body {
@@ -31,7 +31,7 @@ a.active ~ div {
 
 .error_box {
   position: fixed;
-  top: 70px;
+  top: 50px;
   left: 0;
   background-color: rgb(241, 64, 64);
   justify-content: center;
