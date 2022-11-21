@@ -46,12 +46,21 @@ const Router = () => {
 
   useEffect(() => {
     const data = userState.data;
-    if (data && data.user) {
+    if (data && data.user !== null) {
       navigate('/dashboard', { replace: true })
     } else {
-      navigate('/login', { replace: true })
+      if (location.pathname !== '/login' && location.pathname !== '/register') {
+        navigate('/login', { replace: true })
+      }
     }
   }, [userState]);
+
+  useLayoutEffect(() => {
+    const data = userState.data;
+    if ((data && data.user !== null) && (location.pathname === '/register' || location.pathname === '/login')) {
+      navigate('/dashboard', {replace: true})
+    }
+  }, [location.pathname])
 
   useEffect(() => {
     dispatch(checkToken())
@@ -80,7 +89,7 @@ const Router = () => {
         </Route>
         <Route element={<AuthContainer />} path='/'>
           <Route element={<Register />} path='register' />
-          <Route element={<Login />} path='login' /> 
+          <Route element={<Login />} path='login' />
         </Route>
         <Route element={<ErrorPage />} path="*" />
       </Routes>

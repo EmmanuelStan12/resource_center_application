@@ -3,6 +3,7 @@ import axios from 'axios'
 export const USER_LOADING = "USER_LOADING";
 export const USER_ERROR = "USER_ERROR";
 export const USER_SUCCESS = "USER_SUCCESS";
+export const USER_LOGOUT = "USER_LOGOUT"
 
 const URL = 'http://127.0.0.1:3002/users'
 
@@ -19,6 +20,13 @@ export const loginUserSuccess = (payload) => {
         payload
     }
 }
+
+export const userLogout = () => {
+    return {
+        type: USER_LOGOUT
+    }
+}
+
 
 export const loginUserLoading = () => {
     return {
@@ -60,6 +68,7 @@ export const registerUser = (info) => {
             if (response.status !== 201) {
                 dispatch(loginUserError(data.error));
             } else {
+                console.log(response.data)
                 localStorage.setItem('user', JSON.stringify(data.payload.user))
                 localStorage.setItem('token', JSON.stringify(data.payload.token));
                 dispatch(loginUserSuccess(data.payload));

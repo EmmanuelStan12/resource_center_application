@@ -14,6 +14,6 @@ router.post('/register', register);
 
 router.get('/validate', verifyJWTMiddleware, validate);
 
-router.get('/get', getUsers)
+router.get('/get', verifyJWTMiddleware, getUsers)
 
 module.exports.userRouter = router;

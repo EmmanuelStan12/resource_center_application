@@ -66,7 +66,6 @@ const drawerItems = [
 const Drawer = ({ open, isOpen }) => {
     const location = useLocation()
     const path = location.pathname
-    console.log(location)
     
     return (
         <>

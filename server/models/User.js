@@ -10,7 +10,7 @@ class User {
         }
 
         const response = await Database.instance().find('email', email, 'users');
-        if (response.length === 0) {
+        if (response === null) {
             throw Error('User does not exist');
         }
         const user = response[0];
@@ -30,11 +30,14 @@ class User {
         return user
     }
 
-    static async findUsers(track) {
+    static async findUsers(track, _id) {
         const users = await Database.instance().find('track', track, 'users');
-        users.map((user) => {
+        users.map((user, index) => {
             delete user.password;
             delete user.salt;
+            if (user.id === _id) {
+                delete users[index]
+            }
         });
 
         return users;
@@ -45,6 +48,9 @@ class User {
         users.map((user) => {
             delete user.password;
             delete user.salt;
+            if (user.id === _id) {
+                delete users[index]
+            }
         })
 
         return users;
@@ -63,11 +69,11 @@ class User {
             }
         }
         const doesEmailExists = await Database.instance().find('email', user.email, 'users');
-        if (doesEmailExists.length !== 0) {
+        if (doesEmailExists !== null) {
             throw Error("Email already exists")
         }
         const doesUsernameExists = await Database.instance().find('username', user.username, 'users');
-        if (doesUsernameExists.length !== 0) {
+        if (doesUsernameExists !== null) {
             throw Error("Username already exists")
         }
         const hash = hashPassword(user.password);
@@ -120,11 +126,9 @@ class User {
             lastname: null,
             email: null,
             password: null,
-            isAdmin: false,
             isMentor: false,
-            imageUrl: null,
+            imageUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
             track: null,
-            role: null,
             id: null
         }
     }

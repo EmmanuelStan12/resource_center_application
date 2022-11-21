@@ -1,4 +1,4 @@
-import { USER_ERROR, USER_LOADING, USER_SUCCESS } from "../actions/UserActions"
+import { USER_ERROR, USER_LOADING, USER_LOGOUT, USER_SUCCESS } from "../actions/UserActions"
 
 const initialState = {
     data: null,
@@ -13,7 +13,9 @@ export const userReducer = (state = initialState, action) => {
         case USER_ERROR:
             return { ...state, loading: false, error: action.payload }
         case USER_LOADING:
-            return { ...state, loading: true, error: null }
+            return { ...state, loading: true, error: null };
+        case USER_LOGOUT:
+            return { ...state, error: null, data: null }
         default:
             return state;
     }

@@ -6,7 +6,8 @@ import CurriculumContent from '../components/CurriculumContent'
 import Text from '../styles/StyledText'
 import { Divider } from '../styles/StyledDrawerNavigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCurriculum } from '../logic/actions/CurriculumActions'
+import { fetchCurriculum } from '../logic/actions/CurriculumActions';
+import ErrorDisplay from '../components/ErrorDisplay'
 
 const Curriculum = () => {
 
@@ -15,6 +16,7 @@ const Curriculum = () => {
   const curriculumState = useSelector(state => state.curriculumReducer)
   const dispatch = useDispatch()
   const [currentTab, setCurrentTab] = useState(1)
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     
@@ -26,6 +28,7 @@ const Curriculum = () => {
 
   return (
     <Box margin='10px 0 0 0'>
+        <ErrorDisplay show={show} setShow={setShow} error={curriculumState.error} />
         <Text style={{ paddingLeft: '10px' }} as='h4' variant='h4' color='#121212'>Curriculum</Text>
         <Divider></Divider>
         <FlexContainer>

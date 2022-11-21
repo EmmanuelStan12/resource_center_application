@@ -19,7 +19,7 @@ class Database {
     async create(data, col) {
         const docRef = await addDoc(collection(this.db, col), { ...data });
         //console.log("Document written with ID: ", docRef.id);
-        return { ...data, _id: docRef.id }
+        return { ...data, id: docRef.id }
     }
 
     async find(field, value, col) {
@@ -27,7 +27,7 @@ class Database {
         const q = query(collectionRef, where(field, "==", value));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            throw Error('Unknown Error occured, please try again')
+            return null
         }
         const data = []
         querySnapshot.forEach((item) => {

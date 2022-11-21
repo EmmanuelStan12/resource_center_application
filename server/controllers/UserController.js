@@ -4,15 +4,16 @@ const { issueToken } = require('../util/JSONWebToken');
 
 module.exports.login = async (request, response) => {
     const { email, password } = request.body;
-    console.log(request.body)
     try {
         const user = await User.login(email, password);
         console.log(user)
         const _id = user.id;
         const token = issueToken(_id);
         const res = handleResponse(200, { user, token }, null)
+        console.log(res)
         response.status(200).json(res);
     } catch (error) {
+        console.log(error)
         const res = handleResponse(404, {}, error.message)
         response.status(401).send(res);
     }
@@ -23,7 +24,7 @@ module.exports.register = async (request, response) => {
     console.log(request.body)
     try {
         const user = await User.register(request.body);
-        const token = issueToken(user._id);
+        const token = issueToken(user.id);
         const res = handleResponse(201, { token, user }, null);
         response.status(res.status).send(res);  
     } catch (error) {
@@ -72,10 +73,10 @@ module.exports.getUsers = async (request, response) => {
             response.status(401).send(handleResponse(401, null, 'Invalid input'))
         }
         if (track === 'all') {
-            const users = await User.getAllUsers()
+            const users = await User.getAllUsers(request.payload.sub)
             response.status(200).send(handleResponse(200, users))
         } else {
-            const users = await User.findUsers(track);
+            const users = await User.findUsers(track, request.payload.sub);
             response.status(200).send(handleResponse(200, users))
         }
     } catch (error) {
