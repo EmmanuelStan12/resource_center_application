@@ -40,7 +40,7 @@ class Database {
         const docRef = doc(this.db, col, id);
         const result = await getDoc(docRef);
         if (result.exists()) {
-            return result.data()
+            return { ...result.data(), id: id }
         }
         throw Error("Data doesn't exist")
     }
@@ -55,7 +55,7 @@ class Database {
         const querySnapshot = await getDocs(q);
         const data = []
         querySnapshot.forEach((item) => {
-            data.push(item.data());
+            data.push({ ...item.data(), id: item.id });
         });
         return data
     }

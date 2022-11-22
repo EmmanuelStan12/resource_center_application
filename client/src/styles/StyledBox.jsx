@@ -14,7 +14,6 @@ const Box = styled.div.attrs(props => {
         margin = '0px'
     } = props;
     const bg = theme.main[`${background}`] || background;
-    console.log(bg)
     return ({
         width,
         height,

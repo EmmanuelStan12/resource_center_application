@@ -44,7 +44,7 @@ const Router = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const data = userState.data;
     if (data && data.user !== null) {
       navigate('/dashboard', { replace: true })
@@ -62,7 +62,7 @@ const Router = () => {
     }
   }, [location.pathname])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(checkToken())
   }, [])
 

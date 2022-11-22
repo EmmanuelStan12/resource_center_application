@@ -43,12 +43,12 @@ class User {
         return users;
     }
 
-    static async getAllUsers() {
+    static async getAllUsers(id) {
         const users = await Database.instance().getDocuments('users');
-        users.map((user) => {
+        users.map((user, index) => {
             delete user.password;
             delete user.salt;
-            if (user.id === _id) {
+            if (user.id === id) {
                 delete users[index]
             }
         })
@@ -129,7 +129,8 @@ class User {
             isMentor: false,
             imageUrl: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
             track: null,
-            id: null
+            id: null,
+            profile_desc: "Hey there, I'm using Intern's Corp"
         }
     }
 }

@@ -13,7 +13,7 @@ const StyledTextField = styled.div.attrs(props => ({
         align-items: center;
         width: 100%;
         gap: 4px;
-        & > input {
+        & > input, & > textarea {
             outline: none;
             border: 0;
             font-size: 14px;

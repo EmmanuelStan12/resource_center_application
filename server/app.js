@@ -6,6 +6,7 @@ const { userRouter } = require('./routes/UserRouter');
 const { notificationRouter } = require('./routes/NotificationRouter');
 const { handleResponse } = require('./util/CustomResponse');
 const { curriculumRouter } = require('./routes/CurriculumRouter');
+const { inboxRouter } = require('./routes/InboxRouter');
 require('dotenv').config();
 
 // Routes
@@ -22,7 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes for specific endpoint
 app.use('/users', userRouter);
 app.use('/notifications', notificationRouter)
-app.use('/curriculum', curriculumRouter)
+app.use('/curriculum', curriculumRouter);
+app.use('/inbox', inboxRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -72,7 +72,7 @@ const Navbar = () => {
                 <NavbarTitle spanColor='#121212'>
                     Intern  <span>Corp</span>
                 </NavbarTitle>
-                {isAuth ? <AuthOptions /> : <DefaultOptions />}
+                <AuthOptions />
             </StyledNavbar>
         </>
     )

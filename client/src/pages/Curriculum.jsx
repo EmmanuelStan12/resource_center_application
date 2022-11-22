@@ -8,6 +8,7 @@ import { Divider } from '../styles/StyledDrawerNavigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCurriculum } from '../logic/actions/CurriculumActions';
 import ErrorDisplay from '../components/ErrorDisplay'
+import LoadingPage from '../components/LoadingPage'
 
 const Curriculum = () => {
 
@@ -28,6 +29,7 @@ const Curriculum = () => {
 
   return (
     <Box margin='10px 0 0 0'>
+        {curriculumState.loading && <LoadingPage />}
         <ErrorDisplay show={show} setShow={setShow} error={curriculumState.error} />
         <Text style={{ paddingLeft: '10px' }} as='h4' variant='h4' color='#121212'>Curriculum</Text>
         <Divider></Divider>

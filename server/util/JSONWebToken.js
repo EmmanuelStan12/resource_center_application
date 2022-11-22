@@ -32,7 +32,6 @@ module.exports.verifyJWTMiddleware = (request, response, next) => {
     ) {
         try {
             const payload = jwt.verify(tokenParts[1], process.env.JWT_TOKEN, (err, decoded) => {
-                console.log(decoded)
                 if (decoded && !err) {
                     request.payload = decoded;
                     next();
