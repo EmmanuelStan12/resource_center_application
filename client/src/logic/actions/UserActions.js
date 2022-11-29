@@ -5,7 +5,7 @@ export const USER_ERROR = "USER_ERROR";
 export const USER_SUCCESS = "USER_SUCCESS";
 export const USER_LOGOUT = "USER_LOGOUT"
 
-const URL = 'http://127.0.0.1:3002/users'
+const URL = 'https://resource-center-application.onrender.com/users'
 
 export const loginUserError = (error) => {
     return {
@@ -40,7 +40,6 @@ export const loginUser = (email, password) => {
         try {
             const response = await axios.post(`${URL}/login`, { email: email, password: password });
             const data = response.data
-            console.log(data)
             if (response.status !== 200) {
                 dispatch(loginUserError(data.error));
             } else {
@@ -49,7 +48,6 @@ export const loginUser = (email, password) => {
                 dispatch(loginUserSuccess(data.payload));
             }
         } catch (error) {
-            console.log(error)
             if (error.response.data) {
                 dispatch(loginUserError(error.response.data.error))
             } else {
@@ -68,7 +66,6 @@ export const registerUser = (info) => {
             if (response.status !== 201) {
                 dispatch(loginUserError(data.error));
             } else {
-                console.log(response.data)
                 localStorage.setItem('user', JSON.stringify(data.payload.user))
                 localStorage.setItem('token', JSON.stringify(data.payload.token));
                 dispatch(loginUserSuccess(data.payload));

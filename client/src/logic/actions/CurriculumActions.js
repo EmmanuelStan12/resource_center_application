@@ -4,7 +4,7 @@ export const CURRICULUM_LOADING = 'LOADING';
 export const CURRICULUM_SUCCESS = 'SUCCESS';
 export const CURRICULUM_ERROR = 'ERROR'
 
-const URL = 'http://127.0.0.1:3002/curriculum'
+const URL = 'https://resource-center-application.onrender.com/curriculum'
 
 export const fetchCurriculumLoading = () => {
     return {
@@ -36,12 +36,10 @@ export const fetchCurriculum = (track, token) => {
                 }
             });
             const data = response.data
-            console.log(data)
             dispatch(fetchCurriculumSuccess(data.payload))
         } catch (error) {
             if (error.response && error.response.data) {
                 dispatch(fetchCurriculumError(error.response.data))
-                console.log(error.response.data.status)
                 if (error.response.data.status === 422) {
                     localStorage.clear()
                 }

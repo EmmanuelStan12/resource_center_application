@@ -4,7 +4,7 @@ export const USERS_LOADING = "USERS_LOADING";
 export const USERS_ERROR = "USERS_ERROR";
 export const USERS_SUCCESS = "USERS_SUCCESS";
 
-const URL = 'http://127.0.0.1:3002/users'
+const URL = 'https://resource-center-application.onrender.com/users'
 
 export const getUsersError = (error) => {
     return {
@@ -34,14 +34,12 @@ export const getUsers = (query, token) => {
                 headers: { 'Authorization': token } 
             });
             const data = response.data
-            console.log(data)
             if (response.status !== 200) {
                 dispatch(getUsersError(data.error));
             } else {
                 dispatch(getUsersSuccess(data.payload));
             }
         } catch (error) {
-            console.log(error)
             if (error.response.data) {
                 dispatch(getUsersError(error.response.data.error))
             } else {

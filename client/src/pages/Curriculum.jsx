@@ -22,7 +22,6 @@ const Curriculum = () => {
   useEffect(() => {
     
     if (userData && userData.token && curriculumState.data === null && curriculumState.error === null) {
-      console.log(userData, curriculumState)
       dispatch(fetchCurriculum(userData.user.track, userData.token.token))
     }
   }, [userState])

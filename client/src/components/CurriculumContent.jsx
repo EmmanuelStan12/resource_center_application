@@ -6,7 +6,6 @@ import Text from '../styles/StyledText'
 import Switch from './Switch'
 
 const CurriculumContent = ({ item }) => {
-  console.log(item)
   return (
     <Box padding='10px' width='70%' className='scrollbar'>
       <Text as='h5' style={{ fontWeight: 'bold' }} color='#121212' variant='h5'>{item.title}</Text>

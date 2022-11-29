@@ -17,6 +17,7 @@ import Curriculum from "./pages/Curriculum";
 import { checkToken } from "./logic/actions/UserActions";
 import LoadingPage from "./components/LoadingPage";
 import Users from "./pages/Users";
+import Events from './pages/Events'
 
 const router = createBrowserRouter(
   [
@@ -45,25 +46,23 @@ const Router = () => {
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    const data = userState.data;
-    if (data && data.user !== null) {
-      navigate('/dashboard', { replace: true })
-    } else {
-      if (location.pathname !== '/login' && location.pathname !== '/register') {
-        navigate('/login', { replace: true })
-      }
-    }
-  }, [userState]);
+    
+  }, []);
 
-  useLayoutEffect(() => {
-    const data = userState.data;
-    if ((data && data.user !== null) && (location.pathname === '/register' || location.pathname === '/login')) {
-      navigate('/dashboard', {replace: true})
-    }
-  }, [location.pathname])
+  // useLayoutEffect(() => {
+  //   const data = userState.data;
+  //   if ((data && data.user !== null) && (location.pathname === '/register' || location.pathname === '/login')) {
+  //     navigate('/dashboard', {replace: true})
+  //   }
+  // }, [location.pathname])
 
-  useLayoutEffect(() => {
-    dispatch(checkToken())
+  useEffect(() => {
+    const token = get('token')
+    if (token) {
+      dispatch(checkToken())
+    } else if (location.pathname !== '/login' && location.pathname !== '/register') {
+      navigate('/login', { replace: true })
+    }
   }, [])
 
   // useEffect(() => {
@@ -86,10 +85,11 @@ const Router = () => {
           <Route element={<Curriculum />} path='curriculum' />
           <Route element={<Users />} path='users' />
           <Route element={<Home />} path='/dashboard' />
+          <Route element={<Events />} path='events' />
         </Route>
         <Route element={<AuthContainer />} path='/'>
           <Route element={<Register />} path='register' />
-          <Route element={<Login />} path='login' />
+          <Route element={<Login />} index path='login' />
         </Route>
         <Route element={<ErrorPage />} path="*" />
       </Routes>

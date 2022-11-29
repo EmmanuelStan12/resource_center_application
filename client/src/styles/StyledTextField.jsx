@@ -11,6 +11,7 @@ const StyledTextField = styled.div.attrs(props => ({
         display: flex;
         justify-items: center;
         align-items: center;
+        height: fit-content;
         width: 100%;
         gap: 4px;
         & > input, & > textarea {

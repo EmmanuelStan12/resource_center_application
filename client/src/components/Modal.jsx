@@ -9,6 +9,7 @@ import FlexContainer from '../styles/StyledFlexContainer'
 import Button from './Button'
 import TextField, { TextArea } from './TextField'
 import { StyledModal } from '../styles/StyledModal'
+import { Divider } from '../styles/StyledDrawerNavigation'
 
 const Modal = ({
     active,
@@ -112,6 +113,51 @@ export const InboxModal = ({
                         </Button>
                     </FlexContainer>
                     </Box>
+                </StyledModal>
+            
+        </>
+    )
+}
+
+export const EditModal = ({
+    active,
+    setActive,
+    onExecute,
+    contentRef,
+    actionTitle
+}) => {
+
+    return (
+        <>
+            <DrawerOverlay className={active && 'active'} onClick={() => setActive(false)}>
+            </DrawerOverlay>
+            <StyledModal style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} background='transparent' className={active && 'active'}>
+                <FlexContainer flexDirection='column' alignItems='start' justifyContent='center' gap='0px' padding='0.5rem' borderRadius='10px' background='white'>
+                    <FlexContainer justifyContent='space-between' height='fit-content'>
+                    <Text as='h6' variant='h5' color='#121212'>
+                        {actionTitle}
+                    </Text>
+                    <FloatingActionButton onClick={() => setActive(!active)} size={30}>
+                            <MdCancel />
+                        </FloatingActionButton>
+                    </FlexContainer>
+                    <Divider></Divider>
+                    <TextArea
+                        variant={'outlined'}
+                        reference={contentRef}
+                        type='text'
+                        placeholder={'Description'}
+                        rows='5'
+                    />
+                    <FlexContainer background='transparent' height='fit-content' justifyContent='space-between' alignItems='center'>
+                        <Button variant={'outlined'} onClick={() => setActive(false)}>
+                            Cancel
+                        </Button>
+                        <Button variant='elevated' onClick={() => onExecute()}>
+                            Done
+                        </Button>
+                    </FlexContainer>
+                    </FlexContainer>
                 </StyledModal>
             
         </>

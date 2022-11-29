@@ -13,8 +13,8 @@ const InboxItem = ({ inbox, type }) => {
         <FlexContainer width='fit-content' flexDirection='column' alignItems='start' justifyContent='start'>
             <Text as='p' color='#121212' variant='p'>{inbox.title}</Text>
             <Text as='p' color='rgb(85, 85, 85)' style={{ fontStyle: 'italic' }} variant='caption'>{inbox.description}</Text>
-            <Text as='p' color='rgb(85, 85, 85)' style={{ fontStyle: 'italic' }} variant='caption'>{type === 'receiver' ? 'To': 'From'}: {inbox[type].firstname} {inbox[type].lastname}, Username: {inbox[type].username}</Text>
-            <Text as='span' variant='caption' style={{ fontStyle: 'italic' }} color='rgb(85, 85, 85)'>Date: {new Date(inbox.timestamp).toLocaleDateString()}</Text>
+            <Text as='p' color='rgb(85, 85, 85)' style={{ fontStyle: 'italic' }} variant='caption'>{type === 'receiver' ? 'To': 'From'}: {inbox[type].firstname} {inbox[type].lastname} | username: {inbox[type].username}</Text>
+            <Text as='span' variant='caption' style={{ fontStyle: 'italic' }} color='rgb(85, 85, 85)'>Date: {new Date(inbox.timestamp).toLocaleString()}</Text>
         </FlexContainer>
     </FlexContainer>
     <Divider></Divider>

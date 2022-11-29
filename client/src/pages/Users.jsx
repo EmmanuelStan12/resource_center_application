@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import Box from '../styles/StyledBox'
 import Text from '../styles/StyledText'
 import SectionHeader from '../styles/StyledSection'
@@ -12,21 +12,8 @@ import { getUsers } from '../logic/actions/UsersActions'
 import Modal from '../components/Modal'
 import LoadingPage from '../components/LoadingPage'
 import { sendInbox } from '../logic/actions/InboxActions'
-
-const tabs = [
-  {
-    title: 'Interns',
-    route: 'interns'
-  },
-  {
-    title: 'Frontend Developers',
-    route: 'frontend'
-  },
-  {
-    title: 'Mentors',
-    route: 'mentors'
-  }
-]
+import tracks from '../utils/Tracks'
+import { useNavigate } from 'react-router-dom'
 
 const Users = () => {
 
@@ -34,9 +21,31 @@ const Users = () => {
   const usersState = useSelector(state => state.usersReducer)
   const userState = useSelector(state => state.userReducer)
   const inboxState = useSelector(state => state.inboxReducer)
+  const navigate = useNavigate()
+  const tabs = [
+    {
+      title: 'Interns',
+      route: 'interns'
+    },
+    {
+      title: `${tracks[userState.data.user.track]}`,
+      route: userState.data.user.track
+    },
+    {
+      title: 'Mentors',
+      route: 'mentors'
+    }
+  ]
   const [show, setShow] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
+
+  useLayoutEffect(() => {
+    if (!userState.data) {
+      navigate('/login', {replace: true})
+    }
+  }, [])
   useEffect(() => {
+    
     if (userState.data && userState.data.token) {
       dispatch(getUsers('all', userState.data.token.token))
     }
@@ -46,6 +55,8 @@ const Users = () => {
   const [currentTab, setCurrentTab] = useState(tabs[2].route)
   const titleRef = useRef()
   const descriptionRef = useRef()
+
+  
 
   const handleUserClick = (user) => {
     setOpenModal(true)
@@ -95,7 +106,13 @@ const Users = () => {
       </FlexContainer>
       <Divider></Divider>
       <Box>
-        {usersState.data && usersState.data.map((user) => {
+        {usersState.data && usersState.data
+        .filter((user) => {
+          if (currentTab === 'interns') return true;
+          if (user && currentTab === userState.data.user.track) return user.track === userState.data.user.track;
+          if (user && currentTab === 'mentors') return user.isMentor;
+        })
+        .map((user) => {
           return (user && <UserItem key={user.id} onClick={() => handleUserClick(user)} user={user} />)
         })}
       </Box>

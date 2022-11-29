@@ -31,11 +31,11 @@ const drawerItems = [
         title: "Home",
         route: '/dashboard'
     },
-    {
-        icon: BsCalendar4Event,
-        title: "Events",
-        route: '/dashboard/events'
-    },
+    // {
+    //     icon: BsCalendar4Event,
+    //     title: "Events",
+    //     route: '/dashboard/events'
+    // },
     {
         icon: IoMdSchool,
         title: "Curriculum",
@@ -46,16 +46,16 @@ const drawerItems = [
         title: "Inbox",
         route: '/dashboard/inbox'
     },
-    {
-        icon: IoMdNotificationsOutline,
-        title: "Notifications",
-        route: '/dashboard/notifications'
-    },
-    {
-        icon: BiCodeAlt,
-        title: "Challenge",
-        route: "/dashboard/challenge"
-    },
+    // {
+    //     icon: IoMdNotificationsOutline,
+    //     title: "Notifications",
+    //     route: '/dashboard/notifications'
+    // },
+    // {
+    //     icon: BiCodeAlt,
+    //     title: "Challenge",
+    //     route: "/dashboard/challenge"
+    // },
     {
         icon: FiUsers,
         title: "Users",

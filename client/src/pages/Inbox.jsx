@@ -52,7 +52,6 @@ const Inbox = () => {
   const dispatch = useDispatch()
   const userState = useSelector(state => state.userReducer)
   const [currentTab, setCurrentTab] = useState(0)
-  console.log(inboxState)
   const [show, setShow] = useState(false)
 
 
@@ -117,7 +116,7 @@ const Inbox = () => {
         {inboxState.data && inboxState.data.map((value) => {
           const tab = currentTab === 1 ? 0 : 1
           return (
-            <InboxItem type={tabs[tab].route} inbox={value} />
+            <InboxItem key={value.id} type={tabs[tab].route} inbox={value} />
           );
         })}
       </Box>

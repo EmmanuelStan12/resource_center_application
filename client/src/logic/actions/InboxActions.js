@@ -8,7 +8,7 @@ export const GET_INBOX_LOADING = "GET_INBOX_LOADING";
 export const GET_INBOX_ERROR = "GET_INBOX_ERROR";
 export const GET_INBOX_SUCCESS = "GET_INBOX_SUCCESS";
 
-const URL = 'http://127.0.0.1:3002/inbox'
+const URL = 'https://resource-center-application.onrender.com/inbox'
 
 export const sendInboxError = (error) => {
     return {
@@ -64,7 +64,6 @@ export const sendInbox = (inbox, token) => {
                 dispatch(sendInboxSuccess(data.payload));
             }
         } catch (error) {
-            console.log(error)
             if (error.response.data) {
                 dispatch(sendInboxError(error.response.data.error))
             } else {
@@ -82,7 +81,6 @@ export const getInbox = (token, route) => {
                 headers: { 'Authorization': token } 
             });
             const data = response.data
-            console.log(data)
             if (response.status !== 200) {
                 dispatch(getInboxError(data.error));
             } else {

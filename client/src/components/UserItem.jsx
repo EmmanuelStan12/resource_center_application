@@ -17,7 +17,7 @@ const UserItem = ({ user, onClick }) => {
         <Avatar size={40} src={user.imageUrl} />
         <FlexContainer style={{ flex: 1 }} width='fit-content' flexDirection='column' alignItems='start' justifyContent='start'>
             <Text as='p' color='#121212' variant='p'>{user.firstname} {user.lastname}</Text>
-            <Text as='p' color='rgb(85, 85, 85)' style={{ fontStyle: 'italic' }} variant='caption'>email: {user.email}, username: {user.username}, internID: {user.id}</Text>
+            <Text as='p' color='rgb(85, 85, 85)' style={{ fontStyle: 'italic' }} variant='caption'>email: {user.email} | username: {user.username} | internID: {user.id}</Text>
             <Text as='span' variant='caption' style={{ fontStyle: 'italic' }} color='rgb(85, 85, 85)'>{Tracks[`${user.track}`]}</Text>
         </FlexContainer>
         <Box width='fit-content'>
